@@ -1,40 +1,34 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
+  <q-layout view="hHh LpR fFf">
     <q-header elevated>
-      <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="toggleLeftDrawer"
-        />
-
-        <q-toolbar-title>
-          Quasar App
-        </q-toolbar-title>
-
-        <div>Quasar v{{ $q.version }}</div>
+      <q-toolbar class="toolbar">
+        <q-btn flat dense round icon="menu" aria-label="Menu" @click="toggleLeftDrawer" />
+        <q-toolbar-title class="absolute-center">Personal Finance Tracker</q-toolbar-title>
       </q-toolbar>
     </q-header>
 
-    <q-drawer
-      v-model="leftDrawerOpen"
-      show-if-above
-      bordered
-    >
+    <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
       <q-list>
-        <q-item-label
-          header
-        >
-          Essential Links
-        </q-item-label>
-
-        <EssentialLink
-          v-for="link in linksList"
-          :key="link.title"
-          v-bind="link"
+        <q-item-label header>Navigation</q-item-label>
+        <NavLink title="Home" icon="home" link="/" />
+        <NavLink title="Submit Transaction" icon="attach_money" link="/submit-transaction" />
+        <NavLink title="Finance" icon="payments" link="/finance" />
+        <NavLink title="Settings" icon="settings" link="/settings" />
+        
+        <!-- Conditionally render Login/Logout as NavLinks -->
+        <NavLink
+          v-if="!isLoggedIn"
+          flat
+          title="Login/Sign Up"
+          icon="login"
+          @click="login"
+        />
+        <NavLink
+          v-else
+          flat
+          title="Logout"
+          icon="logout"
+          @click="logout"
         />
       </q-list>
     </q-drawer>
@@ -46,61 +40,51 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import EssentialLink from 'components/EssentialLink.vue'
+import NavLink from 'components/NavLink.vue';
+import { ref, onMounted } from 'vue';
+import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
+import { useRouter } from 'vue-router';
 
 defineOptions({
   name: 'MainLayout'
 })
 
-const linksList = [
-  {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev'
-  },
-  {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework'
-  },
-  {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev'
-  },
-  {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev'
-  },
-  {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev'
-  },
-  {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev'
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
-  }
-]
+const leftDrawerOpen = ref(false);
+const isLoggedIn = ref(false);  // Tracks if the user is logged in
+const router = useRouter();
 
-const leftDrawerOpen = ref(false)
+// Function to toggle the drawer state
+function toggleLeftDrawer() {
+  leftDrawerOpen.value = !leftDrawerOpen.value;
+}
 
-function toggleLeftDrawer () {
-  leftDrawerOpen.value = !leftDrawerOpen.value
+// Firebase auth listener to track login state
+onMounted(() => {
+  const auth = getAuth();
+  onAuthStateChanged(auth, (user) => {
+    isLoggedIn.value = !!user;  // Set isLoggedIn to true if user is logged in
+  });
+});
+
+// Login function (redirect to login page)
+function login() {
+  router.push('/login');
+}
+
+// Logout function
+function logout() {
+  const auth = getAuth();
+  signOut(auth).then(() => {
+    isLoggedIn.value = false;
+    router.push('/');  // Redirect to home page after logout
+  }).catch((error) => {
+    console.error("Error logging out:", error);
+  });
 }
 </script>
+
+<style>
+.toolbar {
+  background-color: #4a7262;
+}
+</style>
