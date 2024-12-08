@@ -232,104 +232,154 @@ export default {
 </script>
 
 <style scoped>
+/* Page Background */
 .finance-page {
-  padding: 1rem;
-  background: linear-gradient(135deg, #f1e5d6, #e0d0c2);
+  padding: 2rem;
+  background: linear-gradient(135deg, #f1e5d6, #e0d0c2); /* Light warm gradient for a cozy feel */
+  font-family: 'Quicksand', sans-serif;
+  color: #4a4a4a;
 }
 
+/* Header */
 .header {
   text-align: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
 }
 
 .title {
-  font-size: 2.5rem;
-  font-weight: bold;
-  color: #4a7262;
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: #6d5c3b; /* Earthy brown for a cozy tone */
+  letter-spacing: 1px;
 }
 
 .subtitle {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   color: #7f8c8d;
+  margin-top: 0.5rem;
 }
 
+/* No Data Message */
 .no-data-message {
   font-size: 1.1rem;
   color: #7f8c8d;
   text-align: center;
-  margin-top: 1.5rem;
+  margin-top: 2rem;
 }
 
+/* Section Styling */
 .overview-section,
 .transactions-section,
 .chart-section {
-  background: #ffffff;
-  padding: 1rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  margin-bottom: 1rem;
+  background: #ffffff; /* Soft white background for sections */
+  padding: 1.5rem;
+  border-radius: 15px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Soft shadows for a cozy look */
+  margin-bottom: 2rem;
 }
 
+/* Section Titles */
 h2 {
-  margin-bottom: 1rem;
-  font-size: 1.5rem;
-  color: #d4a373;
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+  color: #d4a373; /* Warm gold for section titles */
+  font-weight: 600;
 }
 
-h3 {
-  font-size: 1.25rem;
-  text-align: center;
-}
-
+/* Overview Section Layout */
 .overview {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   gap: 1rem;
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
 }
 
 .overview-item {
   text-align: center;
+  background: #f7f0e3; /* Light cream background for items */
+  padding: 1rem 1.5rem; /* Reduced padding */
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Soft shadow for each item */
+  flex-basis: 30%; /* Make the cards take up 30% of the container width */
+  min-width: 150px; /* Minimum width for the cards */
+}
+
+.overview-item h3 {
+  font-size: 1.7rem;
+  color: #d4a373; /* Warm gold for section titles */
+  font-weight: 400;
+}
+
+.chart-item h3 {
+  font-size: 1.7rem;
+  color: #d4a373; /* Warm gold for section titles */
+  font-weight: 400;
+  text-align: center;
 }
 
 .amount {
-  font-size: 1.2rem;
-  font-weight: bold;
+  font-size: 1.2rem; /* Slightly smaller font size */
+  font-weight: 700;
+  color: #4b7d3b; /* Cozy green for amount */
+  margin-top: 0.5rem;
 }
 
+/* Transactions Table */
 .transactions-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 1rem;
+  margin-top: 1.5rem;
 }
 
 .transactions-table th,
 .transactions-table td {
   border: 1px solid #ddd;
-  padding: 6px;
+  padding: 10px;
   text-align: center;
-  font-size: 0.9rem;
+  font-size: 1rem;
 }
 
 .transactions-table th {
-  background-color: #f4f4f4;
+  background-color: #f9f9f9;
+  font-weight: 600;
+  color: #4a4a4a;
 }
 
+.transactions-table tbody tr:nth-child(even) {
+  background: #fafafa; /* Light alternating row colors */
+}
+
+.transactions-table tbody tr:hover {
+  background: #f0f0f0; /* Subtle hover effect */
+  cursor: pointer;
+}
+
+/* Charts Section */
 .charts-container {
   display: flex;
   justify-content: space-between;
-  gap: 1rem;
-}
-
-.chart-section h2 {
-  text-align: center;
+  gap: 1.5rem;
 }
 
 .chart-item {
   width: 48%;
+  background: #f7f0e3; /* Light cream background for chart items */
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
+.chart-section h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+/* Canvas Styling */
 canvas {
   max-width: 100%;
   height: 250px;
+  border-radius: 8px; /* Slight rounding for a softer look */
 }
 </style>
+
+
