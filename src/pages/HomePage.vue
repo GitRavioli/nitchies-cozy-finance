@@ -5,67 +5,67 @@
       <h1 class="title text-center text-h4 text-md-h3 text-lg-h2 text-xl-h1">
         {{ user ? `Welcome back, ${user.nickname || 'Guest'}!` : 'Welcome to the Cozy Finance Tracker' }}
       </h1>
-      <p class="subtitle text-center text-body2 text-md-body1 text-lg-body1">
-        {{ user ? 'Keep track of your finances with ease.' : 'Login or Sign Up to take control of your finances, one cozy step at a time.' }}
+      <p class="card-description text-center text-body2 text-md-body1 text-lg-body1">
+        Managing your finances doesn't have to be stressful. Here, you can track your spending and watch your financial progress in a peaceful and comforting way.
       </p>
     </header>
 
-    <section class="summary-section">
-      <h2 class="section-title">Financial Summary</h2>
-      <div class="summary-cards">
+     <!-- How It Works Section -->
+     <section class="how-it-works-section">
+      <h2 class="section-title text-center">How This Cozy Space Works</h2>
+      <div class="how-it-works-cards">
         <div class="card">
-          <h3 class="card-title">Total Income</h3>
-          <p class="card-value">${{ totalIncome }}</p>
+          <h3 class="card-title">Track Your Spending</h3>
+          <p class="card-description">
+            Easily keep track of your income and expenses without the stress. You'll see a clear picture of where your money is going.
+          </p>
         </div>
         <div class="card">
-          <h3 class="card-title">Total Expenses</h3>
-          <p class="card-value">${{ totalExpenses }}</p>
+          <h3 class="card-title">Visualize Your Goals</h3>
+          <p class="card-description">
+            Whether it's saving for something special or just staying on budget, you'll have a peaceful overview of your progress.
+          </p>
         </div>
         <div class="card">
-          <h3 class="card-title">Recurring Monthly Income</h3>
-          <p class="card-value">${{ recurringIncome }}</p>
+          <h3 class="card-title">Stay on Track</h3>
+          <p class="card-description">
+            Use simple, cozy tools to manage your finances at your own pace, with no pressure to act quickly—just gentle, consistent progress.
+          </p>
         </div>
       </div>
     </section>
 
-    <section class="actions-section">
-      <q-btn :to="{ name: 'Finance' }" label="Go to Finance Tracker" class="action-btn" />
+    <!-- Why Cozy Finance Section -->
+    <section class="why-cozy-section">
+      <h2 class="section-title">Why Cozy Finance?</h2>
+      <p class="why-cozy-text">
+        Because managing money shouldn’t be stressful! Think of it as your comfy spot to breathe and take charge of your financial well-being without feeling overwhelmed.
+      </p>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="cta-section">
+      <h2 class="cta-title">Ready to Start Your Cozy Journey?</h2>
+      <p class="cta-text">
+        Let’s make your financial journey feel like a warm cup of tea. Track, plan, and grow your finances in a space that’s all about comfort.
+      </p>
+      <q-btn label="Start Your Cozy Finance Journey" @click="startJourney" class="cta-btn" />
     </section>
   </div>
 </template>
 
 <script>
-import { auth, db } from "../boot/firebase"; // Assuming you're importing Firebase properly
-import { onAuthStateChanged } from "firebase/auth";
-import { doc, getDoc } from "firebase/firestore"; // Import Firestore methods
-
 export default {
   data() {
     return {
-      totalIncome: 5000,
-      totalExpenses: 1500,
-      recurringIncome: 2000,
-      user: null, // To store the logged-in user info
+      user: null, // User data
     };
   },
-  created() {
-    // Listen for authentication state changes
-    onAuthStateChanged(auth, async (authUser) => {
-      if (authUser) {
-        // Get the user document from Firestore based on the authenticated user's UID
-        const userDocRef = doc(db, "users", authUser.uid); // Assuming "users" is your collection
-        const userDocSnap = await getDoc(userDocRef);
-        
-        if (userDocSnap.exists()) {
-          // Set the nickname from Firestore
-          this.user = { ...authUser, nickname: userDocSnap.data().nickname };
-        } else {
-          console.log("No such document!");
-        }
-      } else {
-        this.user = null;
-      }
-    });
+  methods: {
+    startJourney() {
+      // Navigate to the financial dashboard or main feature
+      this.$router.push({ name: 'Finance' });
+    },
   },
 };
 </script>
@@ -73,102 +73,100 @@ export default {
 <style scoped>
 .homepage {
   padding: 2rem;
-  background: linear-gradient(135deg, #f1e5d6, #e0d0c2);
-  font-family: "Poppins", sans-serif;
-  color: #5f4b3d;
+  background: #fdf6e3; /* Warm, light color */
+  font-family: 'Quicksand', sans-serif;
+  color: #4a4a4a;
   min-height: 100vh;
 }
 
-.header {
-  text-align: center;
-  margin-bottom: 2rem;
-}
-
+/* Title Style */
 .title {
-  font-size: 2.8rem;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #6f6f6f;
+}
+
+.section-title, .card-title, .cta-title {
+  font-size: 1.8rem;
   font-weight: 600;
-  color: #4a7262;
-  text-transform: capitalize;
+  color: #6f6f6f;
+  
 }
 
-.subtitle {
-  font-size: 1.25rem;
-  color: #d4a373;
-  margin-top: 0.5rem;
+.intro-text,
+.card-description,
+.why-cozy-text,
+.cta-text {
+  font-size: 1.3rem;
+  color: #8b8b8b;
+  margin-top: 1rem;
 }
 
-.summary-section {
-  background: #ffffff;
-  border-radius: 16px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-  padding: 2rem;
+/* Welcome Section */
+.welcome-section {
+  text-align: center;
   margin-bottom: 3rem;
 }
 
-.section-title {
-  font-size: 1.75rem;
-  font-weight: 500;
-  color: #4a7262;
-  margin-bottom: 1.5rem;
+.intro-text {
+  margin-top: 1rem;
 }
 
-.summary-cards {
+/* How It Works Section */
+.how-it-works-section {
+  margin-bottom: 3rem;
+}
+
+.how-it-works-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
 }
 
 .card {
-  background: #f1c6a3;
-  padding: 1.25rem;
+  background: #fff;
   border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.08);
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card-description {
+  font-size: 1.1rem;
+  color: #7a7a7a;
+  margin-top: 1rem;
+}
+
+/* Why Cozy Finance Section */
+.why-cozy-section {
   text-align: center;
+  margin-bottom: 3rem;
 }
 
-.card p {
-  color: #4f4a4a;
+.why-cozy-text {
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.card-title {
-  font-size: 1.1rem;
-  color: #8a7f6b;
-  margin-bottom: 0.75rem;
+/* Call to Action Section */
+.cta-section {
+  text-align: center;
+  background: #f8e9d2; /* Soft yellow for warmth */
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.card-value {
-  font-size: 1.6rem;
-  font-weight: 600;
-  color: #5f4b3d;
-}
-
-.actions-section {
-  display: flex;
-  justify-content: center;
-}
-
-.action-btn {
+.cta-btn {
+  background-color: #4a7262; /* Soft green for a cozy feel */
+  color: white;
+  border-radius: 8px;
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
   margin-top: 1.5rem;
-  padding: 0.8rem 2rem;
-  border-radius: 8px;
-  background-color: #d4a373;
-  color: white;
-  font-size: 1.1rem;
 }
 
-.action-btn:hover {
+.cta-btn:hover {
   background-color: #5c8071;
-  transition: background-color 0.3s ease;
 }
-
-.q-btn {
-  background-color: #4a7262; /* Muted teal button */
-  color: white;
-  border-radius: 8px;
-}
-
-.q-btn:hover {
-  background-color: #5c8071; /* Darker teal for hover effect */
-}
-
 </style>
