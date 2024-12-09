@@ -51,6 +51,7 @@
       </p>
       <q-btn label="Start Your Cozy Finance Journey" @click="startJourney" class="cta-btn" />
     </section>
+
   </div>
 </template>
 
@@ -77,6 +78,36 @@ export default {
   font-family: 'Quicksand', sans-serif;
   color: #4a4a4a;
   min-height: 100vh;
+}
+/* Mobile-Friendly Media Queries */
+@media (max-width: 415px) {
+  .device-warning-banner {
+    font-size: 1rem; /* Slightly smaller font size on mobile */
+    height: auto; /* Allow the height to be dynamic for smaller screens */
+    max-height: 60px; /* Adjust max-height to ensure no overflow */
+    line-height: 30px; /* Adjust line height for better centering */
+    padding: 0.75rem; /* Less padding for smaller screens */
+  }
+}
+
+
+@media (max-width: 768px) {
+  .device-warning-banner {
+    font-size: 1rem; /* Slightly smaller font size on mobile */
+    height: 60px; /* Reduced height for mobile */
+    line-height: 35px; /* Adjust line height for better centering */
+    padding: 0.75rem; /* Less padding for smaller screens */
+  }
+}
+
+/* Tablet-Friendly Media Queries */
+@media (max-width: 1024px) {
+  .device-warning-banner {
+    font-size: 1.05rem; /* Slightly smaller font size for tablet */
+    height: 65px; /* Adjusted height for tablet */
+    line-height: 38px; /* Adjust line height for centering */
+    padding: 0.85rem; /* Slightly reduced padding for tablet */
+  }
 }
 
 /* Title Style */
