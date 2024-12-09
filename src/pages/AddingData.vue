@@ -19,7 +19,7 @@
                     <div class="form-group">
                         <label for="amount">Amount</label>
                         <input id="amount" type="number" v-model="amount" placeholder="Enter amount"
-                            class="form-control" required />
+                            class="form-control" step="0.01" required />
                     </div>
 
                     <div class="form-group">
